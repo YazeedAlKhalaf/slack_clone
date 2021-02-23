@@ -5,7 +5,7 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import PeopleIcon from "@material-ui/icons/People";
 import AppsIcon from "@material-ui/icons/Apps";
 
-export const sidebarItems = [
+export const mainChannelsItems = [
   {
     icon: <MessageIcon />,
     text: "Thread",
@@ -29,5 +29,26 @@ export const sidebarItems = [
   {
     icon: <AppsIcon />,
     text: "More",
+  },
+];
+
+export const channelsItems = [
+  {
+    text: "Channel 1",
+  },
+  {
+    text: "cp-channel",
+  },
+  {
+    text: "Channel 3",
+  },
+  {
+    text: "clever",
+  },
+  {
+    text: "Channel 2",
+  },
+  {
+    text: "ss",
   },
 ];
