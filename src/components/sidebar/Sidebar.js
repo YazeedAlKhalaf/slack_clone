@@ -39,7 +39,7 @@ function Sidebar() {
 export default Sidebar;
 
 const Container = styled.div`
-  background: #3f0e40;
+  background: ${({ theme }) => theme.sidebarBgColor};
 `;
 
 const WorkspaceContainer = styled.div`
@@ -49,7 +49,7 @@ const WorkspaceContainer = styled.div`
   align-items: center;
   padding-left: 19px;
   justify-content: space-between;
-  border-bottom: 1px solid #532753;
+  box-shadow: 0 1px 0 0 rgb(255 255 255 / 10%);
 `;
 
 const Name = styled.div``;
@@ -58,8 +58,8 @@ const NewMessage = styled.div`
   width: 36px;
   height: 36px;
   background: white;
-  color: #3f0e40;
-  fill: #3f0e40;
+  color: ${({ theme }) => theme.sidebarBgColor};
+  fill: ${({ theme }) => theme.sidebarBgColor};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,7 +82,7 @@ const MainChannelItem = styled.div`
   cursor: pointer;
 
   :hover {
-    background: #350d36;
+    background: ${({ theme }) => theme.sidebarHoverBgColor};
   }
 `;
 
@@ -110,6 +110,6 @@ const ChannelItem = styled.div`
   cursor: pointer;
 
   :hover {
-    background: #350d36;
+    background: ${({ theme }) => theme.sidebarHoverBgColor};
   }
 `;

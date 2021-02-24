@@ -1,32 +1,36 @@
 import logo from "./logo.svg";
 import "./App.css";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Chat from "./components/chat/Chat";
 import Login from "./components/login/Login";
 import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
 import styled from "styled-components";
+import StyleProvider from "./context/style_context";
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <Container>
-          <Header />
-          <Main>
-            <Sidebar />
-            <Switch>
-              <Route path="/room">
-                <Chat />
-              </Route>
-              <Route path="/">
-                <Login />
-              </Route>
-            </Switch>
-          </Main>
-        </Container>
-      </Router>
-    </div>
+    <StyleProvider>
+      <div className="App">
+        <Router>
+          <Container>
+            <Header />
+            <Main>
+              <Sidebar />
+              <Switch>
+                <Route path="/room">
+                  <Chat />
+                </Route>
+                <Route path="/">
+                  <Login />
+                </Route>
+              </Switch>
+            </Main>
+          </Container>
+        </Router>
+      </div>
+    </StyleProvider>
   );
 }
 

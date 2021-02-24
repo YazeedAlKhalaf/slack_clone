@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import ThemeToggle from "../theme_toggle/theme_toggle";
 
 function Header() {
   return (
     <Container>
+      <ThemeToggle />
       <Main>
         <AccessTimeIcon />
         <SearchContainer>
@@ -28,7 +30,7 @@ function Header() {
 export default Header;
 
 const Container = styled.div`
-  background: #350d36;
+  background: ${({ theme }) => theme.headerBgColor};
   color: white;
   display: flex;
   align-items: center;
