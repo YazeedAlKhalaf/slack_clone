@@ -24,6 +24,11 @@ const Container = styled.div`
   padding: 8px 20px;
   display: flex;
   align-items: center;
+  transition: 0.4s ease;
+
+  :hover {
+    background: ${({ theme }) => theme.chatMessageHoverBgColor};
+  }
 `;
 
 const UserAvatar = styled.div`
