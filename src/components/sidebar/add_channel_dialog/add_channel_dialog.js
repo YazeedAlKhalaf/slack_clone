@@ -10,7 +10,7 @@ import AddIcon from "@material-ui/icons/Add";
 import db from "../../../utils/firebase";
 import styled from "styled-components";
 
-function AddChannelDialog() {
+function AddChannelDialog({ size }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -33,9 +33,13 @@ function AddChannelDialog() {
     handleClose();
   };
 
+  const CustomAddIcon = styled(AddIcon)`
+    transform: scale(${size || 1.0});
+  `;
+
   return (
     <Container>
-      <AddIcon onClick={handleClickOpen} />
+      <CustomAddIcon onClick={handleClickOpen} />
       <CustomDialog
         open={open}
         onClose={handleClose}
@@ -71,6 +75,8 @@ function AddChannelDialog() {
 
 export default AddChannelDialog;
 
-const Container = styled.div``;
+const Container = styled.div`
+  cursor: pointer;
+`;
 
 const CustomDialog = styled(Dialog)``;

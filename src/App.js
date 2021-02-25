@@ -9,6 +9,7 @@ import styled from "styled-components";
 import StyleProvider from "./context/style_context";
 import db, { auth } from "./utils/firebase";
 import { userKey } from "./utils/constants";
+import SelectChannel from "./components/select_channel/select_channel";
 
 function App() {
   const [rooms, setRooms] = useState([]);
@@ -53,7 +54,9 @@ function App() {
                   <Route path="/room/:channelId">
                     <Chat user={user} />
                   </Route>
-                  <Route path="/">Select or Create Channel</Route>
+                  <Route path="/">
+                    <SelectChannel />
+                  </Route>
                 </Switch>
               </Main>
             </Container>
