@@ -1,16 +1,51 @@
 import React from "react";
 import styled from "styled-components";
 import SendIcon from "@material-ui/icons/Send";
+import CustomSlackButton from "./buttons/custom_slack_button";
+import FlashOnRoundedIcon from "@material-ui/icons/FlashOnRounded";
+import FormatBoldRoundedIcon from "@material-ui/icons/FormatBoldRounded";
+import FormatItalicRoundedIcon from "@material-ui/icons/FormatItalicRounded";
+import StrikethroughSRoundedIcon from "@material-ui/icons/StrikethroughSRounded";
+import CodeRoundedIcon from "@material-ui/icons/CodeRounded";
+import LinkRoundedIcon from "@material-ui/icons/LinkRounded";
+import FormatListNumberedRoundedIcon from "@material-ui/icons/FormatListNumberedRounded";
+import FormatListBulletedRoundedIcon from "@material-ui/icons/FormatListBulletedRounded";
+import FormatQuoteRoundedIcon from "@material-ui/icons/FormatQuoteRounded";
+import DeveloperModeRoundedIcon from "@material-ui/icons/DeveloperModeRounded";
 
 function ChatInput() {
   return (
     <Container>
       <InputContainer>
         <form>
-          <input type="text" placeholder="Message here..." />
-          <SendButton>
-            <SendIcon />
-          </SendButton>
+          <textarea
+            rows="3"
+            maxLength="500"
+            type="text"
+            placeholder="Message here..."
+          />
+          <ChatInputEditor>
+            <LeftChatEditor>
+              <CustomSlackButton icon={<FlashOnRoundedIcon />} />
+
+              <Separator>|</Separator>
+              <CustomSlackButton icon={<FormatBoldRoundedIcon />} />
+              <CustomSlackButton icon={<FormatItalicRoundedIcon />} />
+              <CustomSlackButton icon={<StrikethroughSRoundedIcon />} />
+              <CustomSlackButton icon={<CodeRoundedIcon />} />
+              <CustomSlackButton icon={<LinkRoundedIcon />} />
+              <CustomSlackButton icon={<FormatListNumberedRoundedIcon />} />
+              <CustomSlackButton icon={<FormatListBulletedRoundedIcon />} />
+              <CustomSlackButton icon={<FormatQuoteRoundedIcon />} />
+              <CustomSlackButton icon={<DeveloperModeRoundedIcon />} />
+            </LeftChatEditor>
+
+            <RightChatEditor>
+              <SendButton>
+                <SendIcon />
+              </SendButton>
+            </RightChatEditor>
+          </ChatInputEditor>
         </form>
       </InputContainer>
     </Container>
@@ -31,23 +66,48 @@ const InputContainer = styled.div`
 
   form {
     display: flex;
-    height: 42px;
-    align-items: center;
+    flex-direction: column;
+    height: min-content;
+    align-items: space-evenly;
 
     padding-left: 10px;
     padding-right: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 
-    input {
+    textarea {
       flex: 1;
       border: none;
       font-size: 13px;
       background: transparent;
+      resize: none;
+      overflow: hidden;
     }
 
-    input:focus {
+    textarea:focus {
       outline: none;
     }
   }
+`;
+
+const ChatInputEditor = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const LeftChatEditor = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Separator = styled.span`
+  font-size: 20px;
+`;
+
+const RightChatEditor = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const SendButton = styled.div`
