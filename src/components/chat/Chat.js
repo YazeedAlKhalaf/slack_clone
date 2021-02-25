@@ -1,17 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import ChatInput from "../chat_input/chat_input";
 import ChatMessage from "../chat_message/chat_message";
+import db from "../../utils/firebase";
+import { useParams } from "react-router-dom";
+import firebase from "firebase";
 
-function Chat() {
+function Chat({ user }) {
+  let { channelId } = useParams();
+  const [channel, setChannel] = useState();
+  const [messages, setMessages] = useState([]);
+
+  const getChannel = () => {
+    db.collection("rooms")
+      .doc(channelId)
+      .onSnapshot((snapshot) => {
+        setChannel(snapshot.data());
+        console.log(snapshot.data());
+      });
+  };
+
+  const sendMessage = (text) => {
+    if (text) {
+      const payload = {
+        text: text,
+        timestamp: firebase.firestore.Timestamp.now(),
+        user: user.name,
+        userImage: user.photoUrl,
+      };
+
+      db.collection("rooms").doc(channelId).collection("messages").add(payload);
+    }
+  };
+
+  const getMessages = () => {
+    db.collection("rooms")
+      .doc(channelId)
+      .collection("messages")
+      .orderBy("timestamp", "asc")
+      .onSnapshot((snapshot) => {
+        let messages = snapshot.docs.map((doc) => doc.data());
+        console.log(messages);
+        setMessages(messages);
+      });
+  };
+
+  useEffect(() => {
+    getChannel();
+    getMessages();
+  }, [channelId]);
+
   return (
     <Container>
       <ChatHeader>
         <LeftHeaderPart>
           <ChannelName>
-            # clever
+            # {channel && channel.name}
             <StarChannel>
               <StarBorderOutlinedIcon />
             </StarChannel>
@@ -28,10 +74,19 @@ function Chat() {
       </ChatHeader>
 
       <MessageContainer>
-        <ChatMessage />
+        {messages.length > 0
+          ? messages.map((message, index) => (
+              <ChatMessage
+                text={message.text}
+                name={message.user}
+                image={message.userImage}
+                timestamp={message.timestamp}
+              />
+            ))
+          : "NO MESSAGES"}
       </MessageContainer>
 
-      <ChatInput></ChatInput>
+      <ChatInput sendMessage={sendMessage}></ChatInput>
     </Container>
   );
 }
@@ -41,6 +96,7 @@ export default Chat;
 const Container = styled.div`
   display: grid;
   grid-template-rows: 65px auto min-content;
+  min-height: 0;
 `;
 
 const ChatHeader = styled.div`
@@ -100,4 +156,7 @@ const RightHeaderPart = styled.div`
   }
 `;
 
-const MessageContainer = styled.div``;
+const MessageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

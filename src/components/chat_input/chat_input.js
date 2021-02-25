@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SendIcon from "@material-ui/icons/Send";
 import CustomSlackButton from "./buttons/custom_slack_button";
@@ -13,7 +13,16 @@ import FormatListBulletedRoundedIcon from "@material-ui/icons/FormatListBulleted
 import FormatQuoteRoundedIcon from "@material-ui/icons/FormatQuoteRounded";
 import DeveloperModeRoundedIcon from "@material-ui/icons/DeveloperModeRounded";
 
-function ChatInput() {
+function ChatInput({ sendMessage }) {
+  const [messageInput, setMessageInput] = useState("");
+
+  const send = (e) => {
+    e.preventDefault();
+
+    if (!messageInput) return;
+    sendMessage(messageInput);
+  };
+
   return (
     <Container>
       <InputContainer>
@@ -23,6 +32,7 @@ function ChatInput() {
             maxLength="500"
             type="text"
             placeholder="Message here..."
+            onChange={(e) => setMessageInput(e.target.value)}
           />
           <ChatInputEditor>
             <LeftChatEditor>
@@ -41,7 +51,7 @@ function ChatInput() {
             </LeftChatEditor>
 
             <RightChatEditor>
-              <SendButton>
+              <SendButton type="submit" onClick={send}>
                 <SendIcon />
               </SendButton>
             </RightChatEditor>

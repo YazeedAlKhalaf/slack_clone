@@ -2,22 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-function ChatMessage() {
+function ChatMessage({ text, name, image, timestamp }) {
   return (
     <Container>
       <MessageHeader>
         <UserAvatar>
-          <img src="https://i.imgur.com/6VBx3io.png" alt="user_avatar" />
+          <img src={image} alt="user_avatar" />
         </UserAvatar>
         <MessageInfo>
-          <Name>Yazeed AlKhalaf</Name>
-          <MessagePostDate>2/23/2021 12:08 AM</MessagePostDate>
+          <Name>{name}</Name>
+          <MessagePostDate>
+            {new Date(timestamp.toDate()).toUTCString()}
+          </MessagePostDate>
         </MessageInfo>
 
         <MoreVertIconCustom />
       </MessageHeader>
       <MessageContent>
-        <Text>This the best Slack Clone</Text>
+        <Text>{text}</Text>
       </MessageContent>
     </Container>
   );

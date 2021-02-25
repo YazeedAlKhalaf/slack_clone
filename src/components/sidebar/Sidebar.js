@@ -5,9 +5,18 @@ import { mainChannelsItems } from "../../data/sidebarData";
 import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
 import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
 import AddChannelDialog from "./add_channel_dialog/add_channel_dialog";
+import { useHistory } from "react-router-dom";
 
 function Sidebar({ rooms }) {
   const [channelsCollapsed, setChannelsCollapsed] = useState(true);
+
+  const history = useHistory();
+
+  const goToChannel = (id) => {
+    if (id) {
+      history.push(`/room/${id}`);
+    }
+  };
 
   return (
     <Container>
@@ -48,7 +57,13 @@ function Sidebar({ rooms }) {
         {channelsCollapsed ? (
           <ChannelsList>
             {rooms.map((room) => (
-              <ChannelItem># {room.name}</ChannelItem>
+              <ChannelItem
+                onClick={() => {
+                  goToChannel(room.id);
+                }}
+              >
+                # {room.name}
+              </ChannelItem>
             ))}
           </ChannelsList>
         ) : (
