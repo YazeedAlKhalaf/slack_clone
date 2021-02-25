@@ -80,6 +80,11 @@ const NewMessage = styled.div`
   border-radius: 50%;
   margin-right: 20px;
   cursor: pointer;
+  transition: 0.25s ease;
+
+  :hover {
+    transform: scale(0.8);
+  }
 `;
 
 const MainChannels = styled.div`
@@ -94,15 +99,18 @@ const MainChannelItem = styled.div`
   align-items: center;
   padding-left: 19px;
   cursor: pointer;
+  transition: 0.25s ease;
 
   :hover {
     background: ${({ theme }) => theme.sidebarHoverBgColor};
+    transform: scale(1.05);
   }
 `;
 
 const ChannelsContainer = styled.div`
   color: #ffffff;
   margin-top: 10px;
+  transition: 0.25s ease;
 `;
 
 const NewChannelContainer = styled.div`
@@ -112,6 +120,15 @@ const NewChannelContainer = styled.div`
   height: 28px;
   padding-left: 19px;
   padding-right: 12px;
+
+  .MuiSvgIcon-root {
+    cursor: pointer;
+    transition: 0.25s ease;
+
+    :hover {
+      transform: scale(0.8);
+    }
+  }
 `;
 
 const ChannelsList = styled.div``;
@@ -122,8 +139,10 @@ const ChannelItem = styled.div`
   align-items: center;
   padding-left: 19px;
   cursor: pointer;
+  transition: 0.25s ease;
 
   :hover {
     background: ${({ theme }) => theme.sidebarHoverBgColor};
+    transform: scale(1.05);
   }
 `;

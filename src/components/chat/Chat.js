@@ -40,7 +40,7 @@ export default Chat;
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 64px auto min-content;
+  grid-template-rows: 65px auto min-content;
 `;
 
 const ChatHeader = styled.div`
@@ -49,7 +49,7 @@ const ChatHeader = styled.div`
   justify-content: space-between;
   padding-left: 20px;
   padding-right: 16px;
-  border-bottom: 1px solid #c1c1c1;
+  border-bottom: 1px solid rgb(255 255 255 / 10%);
 `;
 
 const LeftHeaderPart = styled.div``;
@@ -76,7 +76,7 @@ const StarChannel = styled.div`
   cursor: pointer;
 
   :hover {
-    transform: scale(1);
+    transform: scale(0.7);
   }
 `;
 
@@ -88,9 +88,11 @@ const RightHeaderPart = styled.div`
   transition: 0.25s ease;
   cursor: pointer;
   border-radius: 15px;
+  transition: 0.25s ease;
 
   :hover {
     background: #dcdcdc;
+    transform: scale(0.8);
   }
 
   p {

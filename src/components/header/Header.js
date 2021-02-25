@@ -44,6 +44,14 @@ const Main = styled.div`
   display: flex;
   margin-right: 16px;
   margin-left: 16px;
+
+  .MuiSvgIcon-root {
+    transition: 0.25s ease;
+
+    :hover {
+      transform: scale(0.8);
+    }
+  }
 `;
 
 const SearchContainer = styled.div`
