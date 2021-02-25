@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import AddIcon from "@material-ui/icons/Add";
 import { mainChannelsItems, channelsItems } from "../../data/sidebarData";
 import db from "../../utils/firebase";
+import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
+import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
 
 function Sidebar({ rooms }) {
+  const [channelsCollapsed, setChannelsCollapsed] = useState(true);
+
   const addChannel = () => {
     const promptName = prompt("Enter channel name");
     if (promptName) {
@@ -33,14 +37,33 @@ function Sidebar({ rooms }) {
       </MainChannels>
       <ChannelsContainer>
         <NewChannelContainer>
-          Channels
+          <ChannelsTextContainer>
+            {channelsCollapsed ? (
+              <ArrowDropDownRoundedIcon
+                onClick={() => {
+                  setChannelsCollapsed(false);
+                }}
+              />
+            ) : (
+              <ArrowRightRoundedIcon
+                onClick={() => {
+                  setChannelsCollapsed(true);
+                }}
+              />
+            )}
+            Channels
+          </ChannelsTextContainer>
           <AddIcon onClick={addChannel} />
         </NewChannelContainer>
-        <ChannelsList>
-          {rooms.map((room) => (
-            <ChannelItem># {room.name}</ChannelItem>
-          ))}
-        </ChannelsList>
+        {channelsCollapsed ? (
+          <ChannelsList>
+            {rooms.map((room) => (
+              <ChannelItem># {room.name}</ChannelItem>
+            ))}
+          </ChannelsList>
+        ) : (
+          <span></span>
+        )}
       </ChannelsContainer>
     </Container>
   );
@@ -118,7 +141,7 @@ const NewChannelContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 28px;
-  padding-left: 19px;
+  padding-left: 12px;
   padding-right: 12px;
 
   .MuiSvgIcon-root {
@@ -131,7 +154,14 @@ const NewChannelContainer = styled.div`
   }
 `;
 
-const ChannelsList = styled.div``;
+const ChannelsTextContainer = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+const ChannelsList = styled.div`
+  padding-left: 19px;
+`;
 
 const ChannelItem = styled.div`
   height: 28px;
