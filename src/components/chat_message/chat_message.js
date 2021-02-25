@@ -1,17 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 function ChatMessage() {
   return (
     <Container>
-      <UserAvatar>
-        <img src="https://i.imgur.com/6VBx3io.png" alt="user_avatar" />
-      </UserAvatar>
+      <MessageHeader>
+        <UserAvatar>
+          <img src="https://i.imgur.com/6VBx3io.png" alt="user_avatar" />
+        </UserAvatar>
+        <MessageInfo>
+          <Name>Yazeed AlKhalaf</Name>
+          <MessagePostDate>2/23/2021 12:08 AM</MessagePostDate>
+        </MessageInfo>
+
+        <MoreVertIconCustom />
+      </MessageHeader>
       <MessageContent>
-        <Name>
-          Yazeed AlKhalaf
-          <span>2/23/2021 12:08 AM</span>
-        </Name>
         <Text>This the best Slack Clone</Text>
       </MessageContent>
     </Container>
@@ -23,7 +28,8 @@ export default ChatMessage;
 const Container = styled.div`
   padding: 8px 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
   transition: 0.4s ease;
 
   :hover {
@@ -31,27 +37,38 @@ const Container = styled.div`
   }
 `;
 
+const MessageHeader = styled.div`
+  display: flex;
+`;
+
 const UserAvatar = styled.div`
-  width: 36px;
-  height: 36px;
-  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
   overflow: hidden;
-  margin-right: 8px;
+  margin-right: 20px;
 
   img {
     width: 100%;
   }
 `;
 
-const MessageContent = styled.div`
+const MessageInfo = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const MoreVertIconCustom = styled(MoreVertIcon)`
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
 `;
 
 const Name = styled.span`
   font-weight: 900;
   font-size: 15px;
   line-height: 1.4;
+  color: #0a92ea;
 
   span {
     margin-left: 8px;
@@ -60,4 +77,19 @@ const Name = styled.span`
   }
 `;
 
-const Text = styled.span``;
+const MessagePostDate = styled.span`
+  font-size: 10px;
+  font-weight: 400;
+  color: #606060;
+`;
+
+const MessageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-left: 70px;
+`;
+
+const Text = styled.span`
+  font-size: 14px;
+  font-weight: 500;
+`;
