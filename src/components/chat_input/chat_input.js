@@ -61,7 +61,7 @@ const Container = styled.div`
 `;
 
 const InputContainer = styled.div`
-  border: 1px solid #8d8d8e;
+  box-shadow: 5px 5px 15px 3px ${({ theme }) => theme.chatInputBoxShadowColor};
   border-radius: 10px;
 
   form {

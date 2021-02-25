@@ -8,6 +8,7 @@ export const lightTheme = {
   sidebarBgColor2: "#3C46DA",
   sidebarHoverBgColor: "#363EB0",
   chatMessageHoverBgColor: "#d2d2d2",
+  chatInputBoxShadowColor: "#8d8d8e",
 };
 
 export const darkTheme = {
@@ -20,4 +21,5 @@ export const darkTheme = {
   sidebarBgColor2: "#202225",
   sidebarHoverBgColor: "#34373C",
   chatMessageHoverBgColor: "#404040",
+  chatInputBoxShadowColor: "#232323ad",
 };
