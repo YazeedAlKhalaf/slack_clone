@@ -20,7 +20,7 @@ function Header() {
       <UserContainer>
         <Name>Yazeed AlKhalaf</Name>
         <UserImage>
-          <img src="https://i.imgur.com/6VBx3io.png" />
+          <img src="https://i.imgur.com/6VBx3io.png" alt="user_image" />
         </UserImage>
       </UserContainer>
     </Container>

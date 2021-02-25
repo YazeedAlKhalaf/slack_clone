@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import AddIcon from "@material-ui/icons/Add";
-import { mainChannelsItems, channelsItems } from "../../data/sidebarData";
+import { mainChannelsItems } from "../../data/sidebarData";
 import db from "../../utils/firebase";
 import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
 import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
