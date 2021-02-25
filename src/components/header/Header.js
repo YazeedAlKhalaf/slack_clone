@@ -53,7 +53,7 @@ const SearchContainer = styled.div`
 `;
 
 const Search = styled.div`
-  box-shadow: inset 0 0 0 1px rgb(104 74 104);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 10%);
   width: 100%;
   border-radius: 6px;
   display: flex;
@@ -64,9 +64,12 @@ const Search = styled.div`
     border: none;
     padding-left: 8px;
     padding-right: 8px;
-    color: white;
     padding-top: 4px;
     padding-bottom: 4px;
+  }
+
+  input::placeholder {
+    color: white;
   }
 
   input:focus {

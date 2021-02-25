@@ -49,7 +49,11 @@ function Sidebar({ rooms }) {
 export default Sidebar;
 
 const Container = styled.div`
-  background: ${({ theme }) => theme.sidebarBgColor};
+  background-image: linear-gradient(
+    ${({ theme }) => theme.sidebarBgColor},
+    ${({ theme }) => theme.sidebarBgColor2},
+    ${({ theme }) => theme.sidebarBgColor2}
+  );
 `;
 
 const WorkspaceContainer = styled.div`
@@ -83,7 +87,7 @@ const MainChannels = styled.div`
 `;
 
 const MainChannelItem = styled.div`
-  color: rgb(188 171 188);
+  color: #ffffff;
   display: grid;
   grid-template-columns: 15% auto;
   height: 28px;
@@ -97,7 +101,7 @@ const MainChannelItem = styled.div`
 `;
 
 const ChannelsContainer = styled.div`
-  color: rgb(188 171 188);
+  color: #ffffff;
   margin-top: 10px;
 `;
 

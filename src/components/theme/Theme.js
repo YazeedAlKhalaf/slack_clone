@@ -3,9 +3,10 @@ export const lightTheme = {
   text: "#363537",
   toggleBorder: "#FFF",
   background: "#363537",
-  headerBgColor: "#350D36",
-  sidebarBgColor: "#3f0e40",
-  sidebarHoverBgColor: "#350d36",
+  headerBgColor: "#5261E2",
+  sidebarBgColor: "#5261E2",
+  sidebarBgColor2: "#3C46DA",
+  sidebarHoverBgColor: "#363EB0",
   chatMessageHoverBgColor: "#d2d2d2",
 };
 
@@ -16,6 +17,7 @@ export const darkTheme = {
   background: "#999",
   headerBgColor: "#202225",
   sidebarBgColor: "#202225",
+  sidebarBgColor2: "#202225",
   sidebarHoverBgColor: "#34373C",
   chatMessageHoverBgColor: "#404040",
 };
