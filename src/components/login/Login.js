@@ -25,7 +25,7 @@ function Login({ setUser }) {
     <Container>
       <Content>
         <SlackImage src="http://assets.stickpng.com/images/5cb480b85f1b6d3fbadece78.png"></SlackImage>
-        <h1>Sign in Slack</h1>
+        <h1>Hi 👋</h1>
         <SignInButton
           onClick={() => {
             signIn();
@@ -47,6 +47,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url("https://images.pexels.com/photos/430205/pexels-photo-430205.jpeg?cs=srgb&dl=pexels-scott-webb-430205.jpg&fm=jpg");
 `;
 
 const Content = styled.div`
