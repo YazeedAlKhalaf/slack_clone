@@ -7,6 +7,7 @@ import ChatMessage from "../chat_message/chat_message";
 import db from "../../utils/firebase";
 import { useParams } from "react-router-dom";
 import firebase from "firebase";
+import Void from "../void/void";
 
 function Chat({ user }) {
   let { channelId } = useParams();
@@ -74,16 +75,18 @@ function Chat({ user }) {
       </ChatHeader>
 
       <MessageContainer>
-        {messages.length > 0
-          ? messages.map((message, index) => (
-              <ChatMessage
-                text={message.text}
-                name={message.user}
-                image={message.userImage}
-                timestamp={message.timestamp}
-              />
-            ))
-          : "NO MESSAGES"}
+        {messages.length > 0 ? (
+          messages.map((message, index) => (
+            <ChatMessage
+              text={message.text}
+              name={message.user}
+              image={message.userImage}
+              timestamp={message.timestamp}
+            />
+          ))
+        ) : (
+          <Void text={"No Messages"} />
+        )}
       </MessageContainer>
 
       <ChatInput sendMessage={sendMessage}></ChatInput>
@@ -160,4 +163,5 @@ const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
+  justify-content: center;
 `;
