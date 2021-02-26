@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 function ChatMessage({ text, name, image, timestamp }) {
   return (
@@ -15,8 +14,6 @@ function ChatMessage({ text, name, image, timestamp }) {
             {new Date(timestamp.toDate()).toUTCString()}
           </MessagePostDate>
         </MessageInfo>
-
-        <MoreVertIconCustom />
       </MessageHeader>
       <MessageContent>
         <Text>{text}</Text>
@@ -58,12 +55,6 @@ const UserAvatar = styled.div`
 const MessageInfo = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const MoreVertIconCustom = styled(MoreVertIcon)`
-  position: absolute;
-  right: 15px;
-  cursor: pointer;
 `;
 
 const Name = styled.span`

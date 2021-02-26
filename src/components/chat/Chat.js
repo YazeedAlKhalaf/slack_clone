@@ -95,7 +95,7 @@ export default Chat;
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 65px auto min-content;
+  grid-template-rows: 65px calc(100vh - 230px) min-content;
   min-height: 0;
 `;
 
@@ -159,4 +159,5 @@ const RightHeaderPart = styled.div`
 const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: auto;
 `;

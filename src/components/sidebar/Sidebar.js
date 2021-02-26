@@ -82,6 +82,9 @@ const Container = styled.div`
     ${({ theme }) => theme.sidebarBgColor2},
     ${({ theme }) => theme.sidebarBgColor2}
   );
+  height: calc(100vh + 10px);
+  overflow-x: hidden;
+  overflow-y: auto;
 `;
 
 const WorkspaceContainer = styled.div`

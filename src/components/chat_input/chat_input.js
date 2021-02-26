@@ -21,6 +21,7 @@ function ChatInput({ sendMessage }) {
 
     if (!messageInput) return;
     sendMessage(messageInput);
+    setMessageInput("");
   };
 
   return (
@@ -31,6 +32,7 @@ function ChatInput({ sendMessage }) {
             rows="3"
             maxLength="500"
             type="text"
+            value={messageInput}
             placeholder="Message here..."
             onChange={(e) => setMessageInput(e.target.value)}
           />
@@ -92,6 +94,7 @@ const InputContainer = styled.div`
       background: transparent;
       resize: none;
       overflow: hidden;
+      color: ${({ theme }) => theme.text};
     }
 
     textarea:focus {
