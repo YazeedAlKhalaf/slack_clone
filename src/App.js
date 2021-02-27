@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Chat from "./components/chat/Chat";
 import Login from "./components/login/Login";
@@ -7,26 +7,12 @@ import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
 import styled from "styled-components";
 import StyleProvider from "./context/style_context";
-import db, { auth } from "./utils/firebase";
+import { auth } from "./utils/firebase";
 import { userKey } from "./utils/constants";
 import SelectChannel from "./components/select_channel/select_channel";
 
 function App() {
-  const [rooms, setRooms] = useState([]);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem(userKey)));
-
-  const getChannels = () => {
-    db.collection("rooms").onSnapshot((snapshot) => {
-      setRooms(
-        snapshot.docs.map((doc) => {
-          return {
-            id: doc.id,
-            name: doc.data().name,
-          };
-        })
-      );
-    });
-  };
 
   const signOut = () => {
     auth.signOut().then(() => {
@@ -34,10 +20,6 @@ function App() {
       setUser(null);
     });
   };
-
-  useEffect(() => {
-    getChannels();
-  }, []);
 
   return (
     <StyleProvider>
@@ -49,9 +31,9 @@ function App() {
             <Container>
               <Header user={user} signOut={signOut} />
               <Main>
-                <Sidebar rooms={rooms} />
+                <Sidebar />
                 <Switch>
-                  <Route path="/room/:channelId">
+                  <Route path="/workspaces/:workspaceId/channels/:channelId">
                     <Chat user={user} />
                   </Route>
                   <Route path="/">

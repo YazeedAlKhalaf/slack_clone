@@ -10,12 +10,14 @@ import firebase from "firebase";
 import Void from "../void/void";
 
 function Chat({ user }) {
-  let { channelId } = useParams();
+  let { workspaceId, channelId } = useParams();
   const [channel, setChannel] = useState();
   const [messages, setMessages] = useState([]);
 
   const getChannel = () => {
-    db.collection("rooms")
+    db.collection("workspaces")
+      .doc(workspaceId)
+      .collection("channels")
       .doc(channelId)
       .onSnapshot((snapshot) => {
         setChannel(snapshot.data());
@@ -32,18 +34,25 @@ function Chat({ user }) {
         userImage: user.photoUrl,
       };
 
-      db.collection("rooms").doc(channelId).collection("messages").add(payload);
+      db.collection("workspaces")
+        .doc(workspaceId)
+        .collection("channels")
+        .doc(channelId)
+        .collection("messages")
+        .add(payload);
     }
   };
 
   const getMessages = () => {
-    db.collection("rooms")
+    db.collection("workspaces")
+      .doc(workspaceId)
+      .collection("channels")
       .doc(channelId)
       .collection("messages")
       .orderBy("timestamp", "asc")
       .onSnapshot((snapshot) => {
         let messages = snapshot.docs.map((doc) => doc.data());
-        console.log(messages);
+        console.log("Messages: ", messages);
         setMessages(messages);
       });
   };
@@ -78,6 +87,7 @@ function Chat({ user }) {
         {messages.length > 0 ? (
           messages.map((message, index) => (
             <ChatMessage
+              key={index}
               text={message.text}
               name={message.user}
               image={message.userImage}

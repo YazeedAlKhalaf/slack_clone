@@ -3,6 +3,7 @@ import styled from "styled-components";
 import db, { auth, provider } from "../../utils/firebase";
 import { userKey } from "../../utils/constants";
 import slackImage from "../../assets/slack_image.png";
+import firebase from "firebase";
 
 function Login({ setUser }) {
   const signIn = () => {
@@ -17,7 +18,27 @@ function Login({ setUser }) {
         };
         setUser(newUser);
         localStorage.setItem(userKey, JSON.stringify(newUser));
-        db.collection("users").doc(newUser.id).set(newUser);
+        db.collection("users")
+          .doc(newUser.id)
+          .get()
+          .then((result) => {
+            if (!result.exists) {
+              db.collection("users").doc(newUser.id).set(newUser);
+              const docRefWorkspace = db.collection("workspaces").doc();
+              docRefWorkspace.set({
+                id: docRefWorkspace.id,
+                name: newUser.name,
+                membersIds: [newUser.id],
+              });
+            }
+          });
+
+        db.collection("workspaces")
+          .doc("everyone")
+          .update({
+            membersIds: firebase.firestore.FieldValue.arrayUnion(newUser.id),
+          })
+          .then(() => {});
       })
       .catch((error) => {
         alert(error.message);

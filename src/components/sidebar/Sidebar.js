@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { mainChannelsItems } from "../../data/sidebarData";
@@ -6,25 +6,93 @@ import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
 import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
 import AddChannelDialog from "./add_channel_dialog/add_channel_dialog";
 import { useHistory } from "react-router-dom";
+import db from "../../utils/firebase";
+import { userKey } from "../../utils/constants";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import AddWorkspaceDialog from "./add_workspace_dialog/add_workspace_dialog";
 
-function Sidebar({ rooms }) {
+function Sidebar() {
   const [channelsCollapsed, setChannelsCollapsed] = useState(true);
+  const user = JSON.parse(localStorage.getItem(userKey));
+  const [workspaces, setWorkspaces] = useState([]);
+  const [channels, setChannels] = useState([]);
+  const [currentWorkspaceIndex, setCurrentWorkspaceIndex] = useState(0);
 
   const history = useHistory();
 
   const goToChannel = (id) => {
     if (id) {
-      history.push(`/room/${id}`);
+      history.replace(
+        `/workspaces/${workspaces[currentWorkspaceIndex].id}/channels/${id}`
+      );
     }
+  };
+
+  const getWorkspaces = () => {
+    console.log(user.id);
+    db.collection("workspaces")
+      .where("membersIds", "array-contains", user.id)
+      .onSnapshot((snapshot) => {
+        setWorkspaces(
+          snapshot.docs.map((doc) => {
+            console.log("Workspaces: ", snapshot.docs);
+            return {
+              id: doc.id,
+              membersIds: doc.data().membersIds,
+              name: doc.data().name,
+            };
+          })
+        );
+
+        getChannels(snapshot.docs[currentWorkspaceIndex].id);
+      });
+  };
+
+  const getChannels = (workspaceId) => {
+    console.log("Workspace ID: ", workspaceId);
+    db.collection("workspaces")
+      .doc(workspaceId)
+      .collection("channels")
+      .onSnapshot((snapshot) => {
+        console.log("Channels: ", snapshot.docs);
+        setChannels(
+          snapshot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              name: doc.data().name,
+            };
+          })
+        );
+      });
+  };
+
+  useEffect(() => {
+    getWorkspaces();
+  }, []);
+
+  const toggleWorkspaces = (e) => {
+    setCurrentWorkspaceIndex(e.target.value);
+    getChannels(workspaces[e.target.value].id);
+    history.replace(`/workspaces/${workspaces[e.target.value].id}`);
   };
 
   return (
     <Container>
       <WorkspaceContainer>
-        <Name>CleverProgrammer</Name>
-        <NewMessage>
-          <AddCircleOutlineIcon />
-        </NewMessage>
+        <FormControl>
+          <Select
+            style={{ color: "white" }}
+            value={currentWorkspaceIndex}
+            onChange={toggleWorkspaces}
+          >
+            {workspaces.map((workspace, index) => (
+              <MenuItem value={index}>{workspace.name}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <AddWorkspaceDialog />
       </WorkspaceContainer>
       <MainChannels>
         {mainChannelsItems.map((mainChannelItem) => (
@@ -52,20 +120,43 @@ function Sidebar({ rooms }) {
             )}
             Channels
           </ChannelsTextContainer>
-          <AddChannelDialog />
+          {workspaces.length !== 0 ? (
+            <AddChannelDialog
+              workspaceId={
+                workspaces.length !== 0
+                  ? workspaces[currentWorkspaceIndex].id
+                  : ""
+              }
+            />
+          ) : (
+            <div></div>
+          )}
         </NewChannelContainer>
         {channelsCollapsed ? (
-          <ChannelsList>
-            {rooms.map((room) => (
-              <ChannelItem
-                onClick={() => {
-                  goToChannel(room.id);
-                }}
-              >
-                # {room.name}
-              </ChannelItem>
-            ))}
-          </ChannelsList>
+          channels.length !== 0 ? (
+            <ChannelsList>
+              {channels.map((channel) => (
+                <ChannelItem
+                  onClick={() => {
+                    goToChannel(channel.id);
+                  }}
+                >
+                  # {channel.name}
+                </ChannelItem>
+              ))}
+            </ChannelsList>
+          ) : (
+            <h5
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "15px",
+                letterSpacing: "0.5px",
+              }}
+            >
+              No Channels, Create One!
+            </h5>
+          )
         ) : (
           <span></span>
         )}
@@ -90,32 +181,11 @@ const Container = styled.div`
 const WorkspaceContainer = styled.div`
   color: white;
   height: 64px;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 50px;
   align-items: center;
   padding-left: 19px;
-  justify-content: space-between;
   box-shadow: 0 1px 0 0 rgb(255 255 255 / 10%);
-`;
-
-const Name = styled.div``;
-
-const NewMessage = styled.div`
-  width: 36px;
-  height: 36px;
-  background: white;
-  color: ${({ theme }) => theme.sidebarBgColor};
-  fill: ${({ theme }) => theme.sidebarBgColor};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  margin-right: 20px;
-  cursor: pointer;
-  transition: 0.25s ease;
-
-  :hover {
-    transform: scale(0.8);
-  }
 `;
 
 const MainChannels = styled.div`

@@ -6,12 +6,14 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import AddIcon from "@material-ui/icons/Add";
 import db from "../../../utils/firebase";
 import styled from "styled-components";
+import { userKey } from "../../../utils/constants";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
-function AddChannelDialog({ size, workspaceId }) {
+function AddWorkspaceDialog({ size }) {
   const [open, setOpen] = React.useState(false);
+  const user = JSON.parse(localStorage.getItem(userKey));
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,41 +24,44 @@ function AddChannelDialog({ size, workspaceId }) {
   };
 
   const handleCreate = (e) => {
-    const createChannelTextField = document.getElementById("channel_name");
-    const newChannelName = createChannelTextField.value;
-    if (newChannelName && newChannelName.trim() !== "") {
-      db.collection("workspaces").doc(workspaceId).collection("channels").add({
-        name: newChannelName,
-      });
+    const createWorkspaceTextField = document.getElementById("workspace_name");
+    const newWorkspaceName = createWorkspaceTextField.value;
+    if (newWorkspaceName && newWorkspaceName.trim() !== "") {
+      const docRefWorkspaceNew = db.collection("workspaces").doc();
+
+      docRefWorkspaceNew
+        .set({
+          id: docRefWorkspaceNew.id,
+          name: newWorkspaceName.trim(),
+          membersIds: [user.id],
+        })
+        .then(() => {});
     }
 
     handleClose();
   };
 
-  const CustomAddIcon = styled(AddIcon)`
-    transform: scale(${size || 1.0});
-  `;
-
   return (
     <Container>
-      <CustomAddIcon onClick={handleClickOpen} />
-
+      <NewMessage onClick={handleClickOpen}>
+        <AddCircleOutlineIcon />
+      </NewMessage>
       <CustomDialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Create Channel</DialogTitle>
+        <DialogTitle id="form-dialog-title">Create Workspace</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To create a channel please enter the name below, we will use our hax
-            to create a channel for you 😎
+            To create a workspace please enter the name below, we will use our
+            hax to create a workspace for you 😎
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            id="channel_name"
-            label="Channel Name"
+            id="workspace_name"
+            label="Workspace Name"
             type="text"
             fullWidth
           />
@@ -74,10 +79,29 @@ function AddChannelDialog({ size, workspaceId }) {
   );
 }
 
-export default AddChannelDialog;
+export default AddWorkspaceDialog;
 
 const Container = styled.div`
   cursor: pointer;
 `;
 
 const CustomDialog = styled(Dialog)``;
+
+const NewMessage = styled.div`
+  width: 36px;
+  height: 36px;
+  background: white;
+  color: ${({ theme }) => theme.sidebarBgColor};
+  fill: ${({ theme }) => theme.sidebarBgColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: 0.25s ease;
+
+  :hover {
+    transform: scale(0.8);
+  }
+`;
