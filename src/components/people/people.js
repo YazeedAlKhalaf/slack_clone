@@ -37,6 +37,7 @@ function People() {
   return (
     <Container>
       <MembersList>
+        <MemberItem inviteBlock={true} />
         {members.length !== 0 ? (
           members.map((member, index) => <MemberItem member={member} />)
         ) : (
