@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { auth, provider } from "../../utils/firebase";
+import db, { auth, provider } from "../../utils/firebase";
 import { userKey } from "../../utils/constants";
+import slackImage from "../../assets/slack_image.png";
 
 function Login({ setUser }) {
   const signIn = () => {
@@ -9,12 +10,14 @@ function Login({ setUser }) {
       .signInWithPopup(provider)
       .then((userCredntial) => {
         const newUser = {
+          id: userCredntial.user.uid,
           name: userCredntial.user.displayName,
           photoUrl: userCredntial.user.photoURL,
           email: userCredntial.user.email,
         };
         setUser(newUser);
         localStorage.setItem(userKey, JSON.stringify(newUser));
+        db.collection("users").doc(newUser.id).set(newUser);
       })
       .catch((error) => {
         alert(error.message);
@@ -24,7 +27,7 @@ function Login({ setUser }) {
   return (
     <Container>
       <Content>
-        <SlackImage src="http://assets.stickpng.com/images/5cb480b85f1b6d3fbadece78.png"></SlackImage>
+        <SlackImage src={slackImage}></SlackImage>
         <h1>Hi 👋</h1>
         <SignInButton
           onClick={() => {
