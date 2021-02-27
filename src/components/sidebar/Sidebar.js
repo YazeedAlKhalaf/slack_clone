@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import { mainChannelsItems } from "../../data/sidebarData";
 import ArrowRightRoundedIcon from "@material-ui/icons/ArrowRightRounded";
 import ArrowDropDownRoundedIcon from "@material-ui/icons/ArrowDropDownRounded";
@@ -13,9 +12,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import AddWorkspaceDialog from "./add_workspace_dialog/add_workspace_dialog";
 
-function Sidebar() {
+function Sidebar({ user }) {
   const [channelsCollapsed, setChannelsCollapsed] = useState(true);
-  const user = JSON.parse(localStorage.getItem(userKey));
   const [workspaces, setWorkspaces] = useState([]);
   const [channels, setChannels] = useState([]);
   const [currentWorkspaceIndex, setCurrentWorkspaceIndex] = useState(0);
@@ -31,23 +29,25 @@ function Sidebar() {
   };
 
   const getWorkspaces = () => {
-    console.log(user.id);
-    db.collection("workspaces")
-      .where("membersIds", "array-contains", user.id)
-      .onSnapshot((snapshot) => {
-        setWorkspaces(
-          snapshot.docs.map((doc) => {
-            console.log("Workspaces: ", snapshot.docs);
-            return {
-              id: doc.id,
-              membersIds: doc.data().membersIds,
-              name: doc.data().name,
-            };
-          })
-        );
+    setTimeout(() => {
+      console.log(user.id);
+      db.collection("workspaces")
+        .where("membersIds", "array-contains", user.id)
+        .onSnapshot((snapshot) => {
+          setWorkspaces(
+            snapshot.docs.map((doc) => {
+              console.log("Workspaces: ", snapshot.docs);
+              return {
+                id: doc.id,
+                membersIds: doc.data().membersIds,
+                name: doc.data().name,
+              };
+            })
+          );
 
-        getChannels(snapshot.docs[currentWorkspaceIndex].id);
-      });
+          getChannels(snapshot.docs[currentWorkspaceIndex].id);
+        });
+    }, 500);
   };
 
   const getChannels = (workspaceId) => {
@@ -96,7 +96,14 @@ function Sidebar() {
       </WorkspaceContainer>
       <MainChannels>
         {mainChannelsItems.map((mainChannelItem) => (
-          <MainChannelItem>
+          <MainChannelItem
+            onClick={(e) => {
+              e.preventDefault();
+              history.replace(
+                `/workspaces/${workspaces[currentWorkspaceIndex].id}/${mainChannelItem.path}`
+              );
+            }}
+          >
             {mainChannelItem.icon}
             {mainChannelItem.text}
           </MainChannelItem>

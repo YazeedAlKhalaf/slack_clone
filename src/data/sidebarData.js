@@ -6,28 +6,34 @@ import PeopleIcon from "@material-ui/icons/People";
 import AppsIcon from "@material-ui/icons/Apps";
 
 export const mainChannelsItems = [
-  {
-    icon: <MessageIcon />,
-    text: "Thread",
-  },
-  {
-    icon: <InboxIcon />,
-    text: "All DMs",
-  },
-  {
-    icon: <DraftsIcon />,
-    text: "Mentions & Reactions",
-  },
-  {
-    icon: <BookmarkBorderIcon />,
-    text: "Saved Items",
-  },
+  // {
+  //   icon: <MessageIcon />,
+  //   text: "Thread",
+  //   path: "thread",
+  // },
+  // {
+  //   icon: <InboxIcon />,
+  //   text: "All DMs",
+  //   path: "all-dms",
+  // },
+  // {
+  //   icon: <DraftsIcon />,
+  //   text: "Mentions & Reactions",
+  //   path: "mentions",
+  // },
+  // {
+  //   icon: <BookmarkBorderIcon />,
+  //   text: "Saved Items",
+  //   path: "saved-items",
+  // },
   {
     icon: <PeopleIcon />,
-    text: "Peoples & Groups",
+    text: "People & Groups",
+    path: "people",
   },
-  {
-    icon: <AppsIcon />,
-    text: "More",
-  },
+  // {
+  //   icon: <AppsIcon />,
+  //   text: "More",
+  //   path: "more",
+  // },
 ];

@@ -10,6 +10,7 @@ import StyleProvider from "./context/style_context";
 import { auth } from "./utils/firebase";
 import { userKey } from "./utils/constants";
 import SelectChannel from "./components/select_channel/select_channel";
+import People from "./components/people/people";
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem(userKey)));
@@ -31,10 +32,13 @@ function App() {
             <Container>
               <Header user={user} signOut={signOut} />
               <Main>
-                <Sidebar />
+                <Sidebar user={user} />
                 <Switch>
                   <Route path="/workspaces/:workspaceId/channels/:channelId">
                     <Chat user={user} />
+                  </Route>
+                  <Route path="/workspaces/:workspaceId/people">
+                    <People />
                   </Route>
                   <Route path="/">
                     <SelectChannel />
